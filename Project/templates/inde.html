@@ -1,0 +1,48 @@
+<html>
+    <body>
+		<center><h1>PyShine Live Streaming and Control Car with Sockets</h1></center>
+		<center><img src="http://192.168.10.115:9000/stream.mjpg" width="640" height="480" autoplay playsinline class="rotateimg0"></center>
+	
+        <script src="https://code.jquery.com/jquery-3.5.1.js"
+        integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc="
+        crossorigin="anonymous">
+        </script>
+        <script type="text/javascript">
+        // forward function 
+        function forward_func(element, color,action) {
+            if(!color) {
+            color = element.dataset.normalColor;
+            $.ajax({
+                type: "POST", url: "/",data:{data:'stop'},
+                success: function(result) {
+                    console.log('good');
+                },
+                error: function(result) {
+                    alert('error');
+                }
+            });
+            } else {
+            element.dataset.normalColor = element.style.backgroundColor;
+            $.ajax({type: "POST", url: "/", data:{data:action},
+                success: function(result) {
+                    console.log('good');
+                },
+                error: function(result) {
+                    alert('error');
+                }
+            });
+            }
+            element.style.backgroundColor = color;
+        }
+        </script>
+        &nbsp; 
+        <center>
+        <button onpointerdown="forward_func(this,'blue','forward')" onpointerup="forward_func(this)" style="height:120px;width:120px">Forward</button>
+        <button onpointerdown="forward_func(this,'blue','back')" onpointerup="forward_func(this)" style="height:120px;width:120px">Back</button>
+        <button onpointerdown="forward_func(this,'blue','left')" onpointerup="forward_func(this)" style="height:120px;width:120px">Left</button>
+        <button onpointerdown="forward_func(this,'blue','right')" onpointerup="forward_func(this)" style="height:120px;width:120px">Right</button>
+        
+        </center>
+    </body>
+</html>
+
